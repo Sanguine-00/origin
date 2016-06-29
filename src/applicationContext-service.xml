@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+	<!-- service层 -->
+
+	<bean id="userInfoService" class="njci.service.impl.UserInfoServiceImpl">
+		<property name="userInfoDao" ref="userInfoDao"></property>
+	</bean>
+	<bean id="roleInfoService" class="njci.service.impl.RoleInfoServiceImpl">
+		<property name="roleInfoDao" ref="roleInfoDao"></property>
+	</bean>
+
+	<bean id="newsTypeService" class="njci.service.impl.NewsTypeServiceImpl">
+		<property name="newsTypeDao" ref="newsTypeDao"></property>
+	</bean>
+
+	<bean id="newsService" class="njci.service.impl.NewsServiceImpl">
+		<property name="newsDao" ref="newsDao"></property>
+	</bean>
+
+	<bean id="typeInfoService" class="njci.service.impl.TypeInfoServiceImpl">
+		<property name="typeInfoDao" ref="typeInfoDao"></property>
+	</bean>
+
+	<bean id="brandInfoService" class="njci.service.impl.BrandInfoServiceImpl">
+		<property name="brandInfoDao" ref="brandInfoDao"></property>
+	</bean>
+
+	<bean id="productInfoService" class="njci.service.impl.ProductInfoServiceImpl">
+		<property name="productInfoDao" ref="productInfoDao"></property>
+
+	</bean>
+
+
+
+</beans>
