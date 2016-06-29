@@ -10,8 +10,6 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-import org.apache.struts2.ServletActionContext;
-
 import njci.bean.BrandInfo;
 import njci.bean.ProductInfo;
 import njci.bean.UserInfo;
@@ -20,7 +18,11 @@ import njci.service.ProductInfoService;
 import njci.service.UserInfoService;
 import njci.util.JsonUtil;
 
+import org.apache.struts2.ServletActionContext;
+
 import com.opensymphony.xwork2.ActionSupport;
+import com.sun.org.apache.commons.logging.Log;
+import com.sun.org.apache.commons.logging.LogFactory;
 
 public class ProductInfoAction extends ActionSupport {
 
@@ -28,6 +30,7 @@ public class ProductInfoAction extends ActionSupport {
 	 * 
 	 */
 	private static final long serialVersionUID = -8275546792632971285L;
+	private Log logger = LogFactory.getLog(ProductInfoAction.class);
 
 	private Integer id;
 
@@ -182,7 +185,7 @@ public class ProductInfoAction extends ActionSupport {
 	 * 
 	 * 
 	 */
-	
+
 	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 	public String findAllProductInfo() {
@@ -286,6 +289,7 @@ public class ProductInfoAction extends ActionSupport {
 			String dir = ServletActionContext.getRequest().getRealPath(
 					UPLOADDIR);
 			System.out.println("\n\n\n\n" + file.getAbsoluteFile().getName());
+			logger.debug("\n\n\n\n" + file.getAbsoluteFile().getName());
 			InputStream in = new FileInputStream(file);
 			File fileLocation = new File(dir);
 			// 此处也可以在应用根目录手动建立目标上传目录
@@ -298,6 +302,7 @@ public class ProductInfoAction extends ActionSupport {
 			}
 			File uploadFile = new File(dir, logoUrl);
 			System.out.println(uploadFile.getAbsolutePath());
+			logger.debug(uploadFile.getAbsolutePath());
 			if (!uploadFile.getParentFile().exists()) {
 				uploadFile.getParentFile().mkdirs();
 			}
@@ -314,9 +319,11 @@ public class ProductInfoAction extends ActionSupport {
 			out.close();
 		} catch (FileNotFoundException ex) {
 			System.out.println("上传失败!");
+			logger.debug("上传失败!");
 			ex.printStackTrace();
 		} catch (IOException ex) {
 			System.out.println("上传失败!");
+			logger.debug("上传失败!");
 			ex.printStackTrace();
 		}
 	}
@@ -324,6 +331,7 @@ public class ProductInfoAction extends ActionSupport {
 	@SuppressWarnings("deprecation")
 	private void changeFile() {
 		String dir = ServletActionContext.getRequest().getRealPath(UPLOADDIR);
+		logger.debug(dir);
 		File file = new File(dir, productInfoService.getProductInfoById(id)
 				.getLogoUrl());
 		if (file.exists()

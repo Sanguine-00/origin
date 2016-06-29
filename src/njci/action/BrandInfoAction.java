@@ -18,6 +18,8 @@ import njci.service.TypeInfoService;
 import njci.util.JsonUtil;
 
 import com.opensymphony.xwork2.ActionSupport;
+import com.sun.org.apache.commons.logging.Log;
+import com.sun.org.apache.commons.logging.LogFactory;
 
 @SuppressWarnings("deprecation")
 public class BrandInfoAction extends ActionSupport {
@@ -26,7 +28,8 @@ public class BrandInfoAction extends ActionSupport {
 	 * 
 	 */
 	private static final long serialVersionUID = -8076588886183956748L;
-
+	private Log logger = LogFactory.getLog(BrandInfoAction.class);
+	
 	// Ʒ����������
 	private TypeInfo typeInfo;
 
@@ -199,6 +202,7 @@ public class BrandInfoAction extends ActionSupport {
 			String dir = ServletActionContext.getRequest().getRealPath(
 					UPLOADDIR);
 			System.out.println("\n\n\n\n" + file.getAbsoluteFile().getName());
+			logger.debug("\n\n\n\n" + file.getAbsoluteFile().getName());
 			InputStream in = new FileInputStream(file);
 			File fileLocation = new File(dir);
 			// 此处也可以在应用根目录手动建立目标上传目录
@@ -211,6 +215,7 @@ public class BrandInfoAction extends ActionSupport {
 			}
 			File uploadFile = new File(dir, logo);
 			System.out.println(uploadFile.getAbsolutePath());
+			logger.debug("uploadFile.getAbsolutePath()"+uploadFile.getAbsolutePath());
 			if (!uploadFile.getParentFile().exists()) {
 				uploadFile.getParentFile().mkdirs();
 			}
@@ -227,9 +232,11 @@ public class BrandInfoAction extends ActionSupport {
 			out.close();
 		} catch (FileNotFoundException ex) {
 			System.out.println("上传失败!");
+			logger.debug("上传失败!");
 			ex.printStackTrace();
 		} catch (IOException ex) {
 			System.out.println("上传失败!");
+			logger.debug("上传失败!");
 			ex.printStackTrace();
 		}
 	}

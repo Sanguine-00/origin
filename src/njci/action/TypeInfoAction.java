@@ -9,12 +9,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
-import org.apache.struts2.ServletActionContext;
-
 import njci.bean.TypeInfo;
 import njci.service.TypeInfoService;
 
+import org.apache.struts2.ServletActionContext;
+
 import com.opensymphony.xwork2.ActionSupport;
+import com.sun.org.apache.commons.logging.Log;
+import com.sun.org.apache.commons.logging.LogFactory;
 
 @SuppressWarnings("deprecation")
 public class TypeInfoAction extends ActionSupport {
@@ -25,6 +27,7 @@ public class TypeInfoAction extends ActionSupport {
 	private final static String UPLOADDIR = "/upload/";
 
 	private static final long serialVersionUID = 8945663269298367494L;
+	private Log logger = LogFactory.getLog(TypeInfoAction.class);
 
 	private Integer id;
 	private String type;
@@ -125,12 +128,12 @@ public class TypeInfoAction extends ActionSupport {
 		typeInfoService.update(typeInfo);
 	}
 
-	
-
 	private void uploadFile() {
 		try {
-			String dir = ServletActionContext.getRequest().getRealPath(UPLOADDIR);
+			String dir = ServletActionContext.getRequest().getRealPath(
+					UPLOADDIR);
 			System.out.println("\n\n\n\n" + file.getAbsoluteFile().getName());
+			logger.debug("\n\n\n\n" + file.getAbsoluteFile().getName());
 			InputStream in = new FileInputStream(file);
 			File fileLocation = new File(dir);
 			// 此处也可以在应用根目录手动建立目标上传目录
@@ -143,6 +146,7 @@ public class TypeInfoAction extends ActionSupport {
 			}
 			File uploadFile = new File(dir, logo);
 			System.out.println(uploadFile.getAbsolutePath());
+			logger.debug(uploadFile.getAbsolutePath());
 			if (!uploadFile.getParentFile().exists()) {
 				uploadFile.getParentFile().mkdirs();
 			}
@@ -159,6 +163,7 @@ public class TypeInfoAction extends ActionSupport {
 			out.close();
 		} catch (FileNotFoundException ex) {
 			System.out.println("上传失败!");
+			logger.debug("上传失败");
 			ex.printStackTrace();
 		} catch (IOException ex) {
 			System.out.println("上传失败!");
